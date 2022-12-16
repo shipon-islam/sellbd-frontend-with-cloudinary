@@ -29,7 +29,7 @@ export default function Login() {
     password: true,
     cpassword: true,
   });
-  const { errorMsg } = useSelector((state) => state.auth);
+  const { errorMsg, isLoading } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -252,7 +252,22 @@ export default function Login() {
               {errorMsg && errorMsg}
             </small>
           </div>
-          <Button type="submit" name="login" />
+          <Button
+            type="submit"
+            name={
+              isLoading ? (
+                <div
+                  className={`flex
+                justify-center items-center gap-x-2`}
+                >
+                  <span className=" inline-block w-6 h-6 rounded-full border-r-4 border-l-4 border-gray-100 animate-spin"></span>
+                  login...
+                </div>
+              ) : (
+                "login"
+              )
+            }
+          />
           <GoogleLogin
             clientId="343936071408-obrb4v65plpvd3f3v1qufcb2bq70nf14.apps.googleusercontent.com"
             render={(renderProps) => (

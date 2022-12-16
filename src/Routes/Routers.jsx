@@ -9,6 +9,7 @@ import ProductList from "../dashboard/ProductList";
 import ViewOrderDash from "../dashboard/ViewOrderDash";
 import AddToCard from "../pages/AddToCard";
 import BuyNow from "../pages/BuyNow";
+import Contact from "../pages/Contact";
 import CustomerOrder from "../pages/CustomerOrder";
 import Error from "../pages/Error";
 import Home from "../pages/Home";
@@ -30,26 +31,22 @@ export default function Routers() {
       <Navbar />
 
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/product" element={<Product />} />
         <Route path="/product/info/:_id" element={<ProductInfo />} />
-
         <Route path="/product/card" element={<AddToCard />} />
         <Route path="/product/wishlist" element={<WishList />} />
         <Route path="/product/search" element={<Search />} />
-
-        <Route path="/product" element={<Product />} />
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Error />} />
         <Route path="/dashboard" element={<Dashboard />} />
-
         <Route path="/dashboard/*" element={<ProtectedDashboard />}>
           <Route path="product/add" element={<ProductAdd />} />
           <Route path="product/edit/:_id" element={<ProductEdit />} />
           <Route path="product/list" element={<ProductList />} />
           <Route path="product/order/list" element={<ViewOrderDash />} />
         </Route>
-
         <Route path="/*" element={<ProtectRoutes />}>
           <Route path="product/payment" element={<Payment />} />
           <Route path="product/buy/:_id" element={<BuyNow />} />
@@ -57,6 +54,7 @@ export default function Routers() {
           <Route path="product/order/list/view/:_id" element={<ViewOrder />} />
           <Route path="profile" element={<Profile />} />
         </Route>
+        <Route path="*" element={<Error />} />
       </Routes>
 
       <Footer />

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../app/feature/authSlice";
 import Button from "../components/utilities/Button";
@@ -19,6 +19,7 @@ export default function Signup() {
     password: true,
     cpassword: true,
   });
+  const { isLoading } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -280,7 +281,22 @@ export default function Signup() {
             </small>
           </div>
 
-          <Button type="submit" name="register" />
+          <Button
+            type="submit"
+            name={
+              isLoading ? (
+                <div
+                  className={`flex
+                justify-center items-center gap-x-2`}
+                >
+                  <span className=" inline-block w-6 h-6 rounded-full border-r-4 border-l-4 border-gray-100 animate-spin"></span>
+                  register...
+                </div>
+              ) : (
+                "register"
+              )
+            }
+          />
           <p className="capitalize text-center font-montserrat text-gray-800">
             already have an account?
             <Link className="text-blue-500" to="/login">

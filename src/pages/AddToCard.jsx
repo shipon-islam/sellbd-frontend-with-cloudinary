@@ -75,7 +75,7 @@ function AddToCard() {
                           <div className="flex flex-col-reverse md:flex-row items-center">
                             <img
                               className="md:max-w-[150px] max-w-[110px] h-auto"
-                              src={image[0]}
+                              src={image[0]?.url}
                               alt="card"
                             />
                             <small className="text-[1rem] md:text-lg w-fit pl-4 capitalize">
@@ -106,7 +106,10 @@ function AddToCard() {
                           {price}
                         </td>
                         <td className="px-4 relative py-3 text-md text-gray-600 ">
-                          <AiOutlineClose className="text-lg absolute text-gray-500 top-4 right-6 hover:text-red-500 cursor-pointer md:hidden" />
+                          <AiOutlineClose
+                            onClick={() => dispatch(removecard(_id))}
+                            className="text-lg absolute text-gray-500 top-4 right-6 hover:text-red-500 cursor-pointer md:hidden"
+                          />
                           <TbCurrencyTaka className="text-xl text-gray-500 inline-block relative bottom-1" />
                           {subtotal}
                         </td>

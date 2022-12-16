@@ -15,6 +15,7 @@ export const fetchProduct = createAsyncThunk(
   "getproduct/fetchProduct",
   async () => {
     const { data } = await axios.get("/product/get/all");
+    console.log(data);
     return data;
   }
 );
@@ -41,6 +42,15 @@ export const getProductSlice = createSlice({
       const value = action.payload.toLowerCase();
       if (value === "all") {
         state.filterProduct = state.product;
+      } else if (value === "new") {
+        const product = state.product;
+        state.filterProduct = product
+          .slice(product.length - 5, product.length)
+          .reverse();
+      } else if (value === "tending") {
+        state.filterProduct = state.product.filter(
+          (ele) => ele.category.toLowerCase() === value
+        );
       } else {
         state.filterProduct = state.product.filter(
           (ele) => ele.subcategory.toLowerCase() === value

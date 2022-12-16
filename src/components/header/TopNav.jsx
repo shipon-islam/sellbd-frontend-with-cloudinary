@@ -21,6 +21,7 @@ export default function TopNav() {
   const [toggleInfo, setToggleInfo] = useState(false);
   const [isUserExist, setisUserExist] = useState({});
   const [toggleSearch, setToggleSearch] = useState(false);
+  const [logoutModal, setLogoutModal] = useState(true);
   const { product } = useSelector((state) => state.cardList);
   const { searchProduct } = useSelector((state) => state.productList);
   const { user } = useSelector((state) => state.auth);
@@ -28,6 +29,7 @@ export default function TopNav() {
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleSearch = () => {
     dispatch(filterSearch(searchValue));
 
@@ -43,6 +45,7 @@ export default function TopNav() {
   useEffect(() => {
     setisUserExist(user);
   }, [user]);
+
   const handleClose = () => {
     setToggleInfo(false);
   };
@@ -146,16 +149,41 @@ export default function TopNav() {
                 </Link>
               </li>
               {isUserExist ? (
-                <li
-                  className="text-xl capitalize mt-6 cursor-pointer"
-                  onClick={() => {
-                    dispatch(logout(navigate));
-                    handleClose();
-                  }}
-                >
-                  <RiLogoutBoxLine className="inline-block mr-1 mb-1" />
-                  logout
-                </li>
+                logoutModal ? (
+                  <li
+                    onClick={() => setLogoutModal(false)}
+                    className="text-xl capitalize mt-6 cursor-pointer"
+                  >
+                    <RiLogoutBoxLine className="inline-block mr-1 mb-1" />
+                    logout
+                  </li>
+                ) : (
+                  <div className="ml-2 mt-4 font-montserrat">
+                    <h1 className="my-2 text-[1.2rem] sm:w-[85%]">
+                      Are you sure you want to logout from sellbd??
+                    </h1>
+                    <button
+                      onClick={() => {
+                        setLogoutModal(true);
+                      }}
+                      className="bg-gray-100 md:px-4 px-2 rounded-md 
+                      py-1 uppercase font-semibold text-sm text-gray-700 hover:bg-gray-300 "
+                    >
+                      cencel
+                    </button>
+                    <button
+                      onClick={() => {
+                        dispatch(logout(navigate));
+                        handleClose();
+                        setLogoutModal(true);
+                      }}
+                      className="bg-orange-300 md:px-4 px-2 rounded-md 
+                      py-1 uppercase font-semibold text-sm text-gray-700 ml-8"
+                    >
+                      confirm
+                    </button>
+                  </div>
+                )
               ) : (
                 <li className="text-xl capitalize mt-6">
                   <BiLogIn className="inline-block mr-1 mb-1" />
@@ -165,6 +193,7 @@ export default function TopNav() {
                 </li>
               )}
             </ul>
+
             <button
               className="absolute top-10 right-8"
               onClick={() => setToggleInfo(false)}

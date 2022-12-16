@@ -14,7 +14,7 @@ function LineCard({ filterProduct }) {
               <Link to={`/product/info/${_id}`} className="flex border-b py-3">
                 <img
                   className="w-28 object-cover h-auto"
-                  src={image[0]}
+                  src={image[0]?.url}
                   alt="card"
                 />
                 <div>

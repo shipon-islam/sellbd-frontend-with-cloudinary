@@ -30,24 +30,24 @@ export default function FilterAria() {
       <div className="">
         <div className="flex justify-between">
           <button
-            className="text-lg font-raleway text-gray-500 font-semibold"
+            className="text-lg font-raleway text-orange-500 font-semibold"
             onClick={() => handleClick("all")}
           >
-            <AiFillShopping className=" text-indigo-500 text-[1.4rem] mb-[0.4rem]  inline-block" />
+            <AiFillShopping className=" text-orange-500 text-[1.6rem] mb-[0.4rem]  inline-block" />
             All
           </button>
           <button
-            className="text-lg font-raleway text-gray-500 font-semibold"
+            className="text-lg font-raleway text-orange-500  font-semibold"
             onClick={() => handleClick("new")}
           >
-            <AiFillClockCircle className="text-indigo-500 text-[1.2rem] inline-block mb-1" />
+            <AiFillClockCircle className="text-orange-500 text-[1.4rem] inline-block mb-1" />
             New
           </button>
           <button
-            className="text-lg font-raleway text-gray-500 font-semibold"
+            className="text-lg font-raleway text-orange-500 font-semibold"
             onClick={() => handleClick("tending")}
           >
-            <AiFillFire className="mb-1 text-indigo-500  text-[1.4rem] inline-block" />
+            <AiFillFire className="mb-1 text-orange-500  text-[1.6rem] inline-block" />
             Tending
           </button>
         </div>

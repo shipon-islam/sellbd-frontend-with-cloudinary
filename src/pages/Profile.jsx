@@ -52,20 +52,20 @@ export default function Profile() {
       <WraperSideLinks page="personal info">
         <div className="border-2 h-fit sm:p-10 py-10 px-6 relative rounded-sm mt-8 bg-gray-200/30">
           <div className=" sm:flex flex-wrap gap-6">
-            <div className="relative w-40 max-h-48">
+            <div className="relative w-40 h-fit">
               <img
-                className="w-full h-full object-cover"
+                className="w-full max-h-[180px] rounded-sm object-cover"
                 src={info?.avatar.url || image}
                 alt="avatar"
               />
               <span
-                className="bg-slate-500/20 inline-block p-1 rounded-full absolute right-0 bottom-0 cursor-pointer"
+                className="bg-slate-500/20 inline-block p-1 rounded-full absolute right-1 bottom-1 cursor-pointer"
                 onClick={() => fileRef.current.click()}
               >
                 <HiCamera className="text-xl text-slate-800" />
               </span>
             </div>
-            <div className="font-montserrat">
+            <div className="font-montserrat mt-4">
               <ProfieInfo
                 name="name"
                 title={info?.username}
