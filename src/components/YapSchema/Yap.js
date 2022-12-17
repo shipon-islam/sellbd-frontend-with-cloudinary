@@ -12,6 +12,10 @@ const registorValidate = {
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Confirm password is required"),
 };
+const loginValidate = {
+  email: Yup.string().required("Email is required"),
+  password: Yup.string().required("Password is required"),
+};
 const changeValidate = {
   oldPassword: Yup.string()
     .required("Old password is required")
@@ -41,6 +45,13 @@ const paymentValidate = {
   cardNumber: Yup.string().required("card numbver is required"),
   date: Yup.string().required("date is required"),
 };
+const contactValidate = {
+  name: Yup.string().min(0).required("name is required"),
+  email: Yup.string().email("Email is invalid").required("Email is required"),
+  message: Yup.string().required("message is required"),
+};
 export const registorSchema = Yup.object(registorValidate).required(true);
+export const loginSchema = Yup.object(loginValidate).required(true);
 export const changePasswordSchema = Yup.object(changeValidate).required(true);
 export const paymentSchema = Yup.object(paymentValidate).required(true);
+export const contactSchema = Yup.object(contactValidate).required(true);

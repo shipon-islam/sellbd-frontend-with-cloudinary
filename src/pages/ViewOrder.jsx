@@ -15,7 +15,6 @@ export default function ViewOrder() {
     const { data } = await axios.get(`/customer/payment/get/${_id}`);
     setOrder(data);
     setLoading(false);
-    console.log(data);
   };
 
   useEffect(() => {
@@ -114,6 +113,7 @@ export default function ViewOrder() {
             </table>
           </div>
         </div>
+        <div></div>
       </WraperSideLinks>
     </Layout>
   );

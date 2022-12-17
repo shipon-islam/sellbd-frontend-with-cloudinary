@@ -8,18 +8,12 @@ import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 import { login } from "../app/feature/authSlice";
 import Button from "../components/utilities/Button";
 import Layout from "../components/utilities/Layout";
 
 import Form from "../components/utilities/Form";
-const yapvalidate = {
-  email: Yup.string().required("Email is required"),
-  password: Yup.string().required("Password is required"),
-};
-
-const schema = Yup.object(yapvalidate).required(true);
+import { loginSchema } from "../components/YapSchema/Yap.js";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -35,7 +29,7 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
 
   const onSubmit = (data) => {
