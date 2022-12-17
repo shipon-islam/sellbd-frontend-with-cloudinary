@@ -66,9 +66,11 @@ export default function Contact() {
               type="text"
               {...register("name")}
             />
-            <small className="ml-2 text-red-400 ">
-              {errors?.name?.message}
-            </small>
+            {errors.name && (
+              <small className="ml-2 text-red-400 ">
+                {errors.name.message}
+              </small>
+            )}
           </div>
           <div className="my-6">
             <input
@@ -77,9 +79,11 @@ export default function Contact() {
               placeholder="Enter your email"
               {...register("email")}
             />
-            <small className="ml-2 text-red-400 ">
-              {errors?.email?.message}
-            </small>
+            {errors.email && (
+              <small className="ml-2 text-red-400 ">
+                {errors.email.message}
+              </small>
+            )}
           </div>
           <div>
             <textarea
@@ -88,9 +92,11 @@ export default function Contact() {
               placeholder="Write message"
               {...register("message")}
             ></textarea>
-            <small className="ml-2 text-red-400 ">
-              {errors?.message?.message}
-            </small>
+            {errors.message && (
+              <small className="ml-2 text-red-400 ">
+                {errors.message.message}
+              </small>
+            )}
           </div>
           <button
             ref={buttonRef}
