@@ -9,9 +9,10 @@ export default function Hero() {
           <br />
           shopping
         </h1>
-        <p className="text-lg my-6 text-gray-800">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. A sit aliquam
-          lacus ut blandit. Rhoncus tempus pellentesque tellus nec.{" "}
+        <p className="text-lg my-6  text-gray-800">
+          Sellbd is one of the most populer and largest online shopping platform
+          in bangladesh.Every week about 1 milion people purcheses their own
+          product.
         </p>
         <button className="bg-orange-300 text-xl uppercase font-semibold py-3 px-16 rounded-md text-gray-800 mt-4">
           get start

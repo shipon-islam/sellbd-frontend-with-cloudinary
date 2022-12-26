@@ -82,7 +82,7 @@ export default function Profile() {
               onClick={() => handleChangePasswordToggle()}
               className="absolute right-6 bottom-2 text-orange-400"
             >
-              change password?
+              Change password?
             </button>
             <input
               type="file"

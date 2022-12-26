@@ -10,7 +10,6 @@ import Layout from "../components/utilities/Layout";
 import LineCard from "../components/utilities/LineCard";
 import NoFound from "../components/utilities/NoFound";
 import SidebarLinks from "../components/utilities/SidebarLInks";
-import Loading from "./Loading";
 
 export default function Product() {
   const { catToggle, filterToggle, layoutToggle } = useSelector(
@@ -23,16 +22,14 @@ export default function Product() {
   useEffect(() => {
     setProduct(filterProduct);
   }, [filterProduct]);
-  if (loading) {
-    return <Loading />;
-  }
+
   return (
     <Layout>
       <div className="grid md:grid-cols-[2fr_minmax(300px,5fr)] gap-x-8">
         <SidebarLinks />
 
         <div>
-          <div className=" sticky border-b top-[8.5rem] md:top-[9.5rem]  bg-white pb-3 pt-5 px-2">
+          <div className=" sticky border-b top-[8.5rem] md:top-[9.5rem]  bg-white pb-3 pt-5 px-2 ">
             <FilterAreaDesktop />
             <FilterAria />
             {catToggle && <CatLinks />}

@@ -21,7 +21,7 @@ export default function ({ rating }) {
   return (
     <div className="flex justify-between items-center">
       <div className="flex">{arr}</div>
-      <div className="text-gray-600">Reviews</div>
+      <div className="text-gray-600 ml-2">Reviews</div>
     </div>
   );
 }

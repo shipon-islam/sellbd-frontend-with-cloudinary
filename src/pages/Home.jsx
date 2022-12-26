@@ -9,13 +9,9 @@ import NewProduct from "../components/sections/NewProduct";
 import Technology from "../components/sections/Technology";
 import Tending from "../components/sections/Tending";
 import Layout from "../components/utilities/Layout";
-import Loading from "./Loading";
 
 export default function Home() {
   const { loading, product } = useSelector((state) => state.productList);
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <Layout>

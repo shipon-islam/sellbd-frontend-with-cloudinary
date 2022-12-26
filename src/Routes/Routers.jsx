@@ -41,6 +41,7 @@ export default function Routers() {
         <Route path="/product/wishlist" element={<WishList />} />
         <Route path="/product/search" element={<Search />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<Error />} />
         <Route path="/dashboard/*" element={<ProtectedDashboard />}>
           <Route path="product/add" element={<ProductAdd />} />
           <Route path="product/edit/:_id" element={<ProductEdit />} />
@@ -54,7 +55,6 @@ export default function Routers() {
           <Route path="product/order/list/view/:_id" element={<ViewOrder />} />
           <Route path="profile" element={<Profile />} />
         </Route>
-        <Route path="*" element={<Error />} />
       </Routes>
 
       <Footer />

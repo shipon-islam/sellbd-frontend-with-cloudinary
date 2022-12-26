@@ -53,13 +53,6 @@ export default function BottomNav() {
             >
               contact us
             </Link>
-            <Link
-              to="/about"
-              onClick={handleClick}
-              className="block text-[1rem]  font-[500] my-3 uppercase  text-slate-600 hover:text-slate-900"
-            >
-              about us
-            </Link>
           </div>
           <div />
         </div>
