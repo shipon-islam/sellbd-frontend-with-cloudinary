@@ -1,7 +1,6 @@
 import React from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
+
 import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
@@ -12,13 +11,12 @@ function LineCard({ filterProduct }) {
         filterProduct.map((element) => {
           const { _id, price, image, title, rating } = element;
           return (
-            <div className="-z-10" key={_id}>
+            <div key={_id}>
               <Link to={`/product/info/${_id}`} className="flex border-b py-3">
-                <LazyLoadImage
-                  alt="card"
-                  effect="blur"
+                <img
                   className="w-28 object-cover h-auto"
                   src={image[0].url}
+                  alt="card"
                 />
 
                 <div>

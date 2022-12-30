@@ -26,7 +26,7 @@ export default function FilterAria() {
   };
 
   return (
-    <div className="md:hidden">
+    <div className="md:hidden ">
       <div className="">
         <div className="flex justify-between">
           <button

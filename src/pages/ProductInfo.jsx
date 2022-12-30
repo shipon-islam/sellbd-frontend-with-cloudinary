@@ -73,7 +73,7 @@ export default function ProductInfo() {
           </div>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_minmax(200px,_2fr)_260px] gap-x-6 mt-12">
-          <Carousel autoPlay={true}>
+          <Carousel swipeable={false} autoPlay={true}>
             {product.image.map((pic, index) => (
               <img key={index} src={pic.url} alt="product" />
             ))}
