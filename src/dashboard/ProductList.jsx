@@ -1,25 +1,24 @@
 import React from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "../axios";
+import { ToastContainer, toast } from "react-toastify";
+import { useDeleteProductMutation, useGetProductsQuery } from "../app/services/productApi";
 import Layout from "../components/utilities/Layout";
 import Rating from "../components/utilities/Rating";
 import Navbar from "./Navbar";
 function ProductList() {
-  const { product } = useSelector((state) => state.productList);
-
-  const deleteProduct = async (_id) => {
+  const {isLoading,data:product}=useGetProductsQuery()
+  const [deleteProduct]=useDeleteProductMutation()
+  const deleteProductFunc = async (_id) => {
     try {
-      const { data } = await axios.delete(`/product/delete/${_id}`);
+      const { data } = deleteProduct(_id);     
       return data;
     } catch (error) {
       console.log(error);
     }
   };
   const handleDelete = async (_id) => {
-    const myFunc = deleteProduct(_id);
+    const myFunc = deleteProductFunc(_id);
     toast.promise(myFunc, {
       pending: "loading...",
       success: "delete product successfuly👌",

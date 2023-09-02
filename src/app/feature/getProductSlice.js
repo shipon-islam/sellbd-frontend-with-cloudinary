@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "../../axios";
 
 //initialized state
 const initialState = {
@@ -14,7 +13,8 @@ const initialState = {
 export const fetchProduct = createAsyncThunk(
   "getproduct/fetchProduct",
   async () => {
-    const { data } = await axios.get("/product/get/all");
+    const res = await fetch("https://sellbdapi.onrender.com/api/products");
+    const data = await res.json();
     console.log(data);
     return data;
   }

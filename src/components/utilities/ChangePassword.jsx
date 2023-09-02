@@ -4,18 +4,15 @@ import { useForm } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "../../axios";
+import { toast } from "react-toastify";
 
+import { useUpdateUserMutation } from "../../app/services/userApi";
 import { changePasswordSchema } from "../YapSchema/Yap";
 import Button from "./Button";
 
 export default function ChangePassword({ email, handleChangePasswordToggle }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const formRef = useRef(null);
+  const [updateUser,{isSuccess}]=useUpdateUserMutation()
 
   const [type, setType] = useState({
     oldPassword: true,
@@ -35,8 +32,7 @@ export default function ChangePassword({ email, handleChangePasswordToggle }) {
     formdata.append("oldPassword", data.oldPassword);
     formdata.append("newPassword", data.password);
     formdata.append("email", email);
-    const res = await axios.put("/user/update", formdata);
-
+    const res = await updateUser(formdata);
     if (res.data.message) {
       return toast.error(res.data.message, { autoClose: 1000 });
     }
@@ -71,7 +67,6 @@ export default function ChangePassword({ email, handleChangePasswordToggle }) {
           >
             <AiOutlineClose className="text-xl text-gray-600 hover:text-orange-400" />
           </div>
-          <ToastContainer />
         </div>
         <div className="inline">
           <div className="relative">

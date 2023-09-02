@@ -13,7 +13,6 @@ import {
 } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../app/feature/authSlice";
 import { filterSearch } from "../../app/feature/getProductSlice";
 import logo from "../../assets/bandlogo.png";
 
@@ -24,7 +23,6 @@ export default function TopNav() {
   const [logoutModal, setLogoutModal] = useState(true);
   const { product } = useSelector((state) => state.cardList);
   const { searchProduct } = useSelector((state) => state.productList);
-  const { user } = useSelector((state) => state.auth);
   const [searchValue, setSearchValue] = useState("");
   const inputRef = useRef(null);
   const navigate = useNavigate();
@@ -42,13 +40,21 @@ export default function TopNav() {
   const handleSearchButton = () => {
     setToggleSearch(true);
   };
-  useEffect(() => {
-    setisUserExist(user);
-  }, [user]);
-
   const handleClose = () => {
     setToggleInfo(false);
   };
+  const handleLogout = () => {
+    setLogoutModal(true);
+    setToggleInfo(false);
+    window.localStorage.removeItem("user");
+    navigate("/");
+  };
+  useEffect(() => {
+    const user = localStorage.getItem("user")
+      ? JSON.parse(localStorage.getItem("user"))
+      : null;
+    setisUserExist(user);
+  }, [logoutModal]);
 
   return (
     <div className="py-3 mx-8 md:mx-16 lg:mx-24 ">
@@ -173,9 +179,7 @@ export default function TopNav() {
                     </button>
                     <button
                       onClick={() => {
-                        dispatch(logout(navigate));
-                        handleClose();
-                        setLogoutModal(true);
+                        handleLogout();
                       }}
                       className="bg-orange-300 md:px-4 px-2 rounded-md 
                       py-1 uppercase font-semibold text-sm text-gray-700 ml-8"

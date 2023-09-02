@@ -6,24 +6,26 @@ import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../app/feature/authSlice";
 import Button from "../components/utilities/Button";
 import Layout from "../components/utilities/Layout";
 
-import Form from "../components/utilities/Form";
+import { toast } from "react-toastify";
+import { useLoginUserMutation } from "../app/services/userApi";
 import { loginSchema } from "../components/YapSchema/Yap.js";
+import Form from "../components/utilities/Form";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loginUser,{isLoading}]=useLoginUserMutation()
   const [data, setData] = useState({ email: "", password: "" });
   const [type, setType] = useState({
     password: true,
     cpassword: true,
   });
-  const { errorMsg, isLoading } = useSelector((state) => state.auth);
+  
   const {
     register,
     handleSubmit,
@@ -32,9 +34,20 @@ export default function Login() {
     resolver: yupResolver(loginSchema),
   });
 
-  const onSubmit = (data) => {
-    dispatch(login({ data, navigate, redirect: "/" }));
-  };
+  const onSubmit = async(data) => {
+    const res=await loginUser(data);
+  
+    if(res.data.message){
+     toast.error(res.data.message,{
+     })
+    }
+    if(!res.data.message&&res.data){
+      console.log(res)
+     window.localStorage.setItem("user",JSON.stringify(res.data))
+     navigate("/")
+     window.location.reload();
+    }
+   };
   const responseGoogle = (result) => {
     const { email, name } = result.profileObj;
     const googleUser = { email, username: name, token: result.token };
@@ -242,9 +255,6 @@ export default function Login() {
                 />
               )}
             </div>
-            <small className="font-montserrat ml-2">
-              {errorMsg && errorMsg}
-            </small>
           </div>
           <Button
             type="submit"

@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { fetchPayment } from "../app/feature/getPaymentSlice";
+import { useGetOrderListQuery } from "../app/services/paymentApi";
 import Layout from "../components/utilities/Layout";
 import PaymentSmDevice from "../components/utilities/PaymentSmDevice";
 import WraperSideLinks from "../components/utilities/WraperSideLinks";
@@ -11,15 +10,10 @@ import Loading from "./Loading";
 
 export default function CustomerOrder() {
   const [show, setShow] = useState(true);
-  const dispatch = useDispatch();
+  const{isLoading,data}=useGetOrderListQuery()
+ 
 
-  const { data, loading } = useSelector((state) => state.payment);
-
-  useEffect(() => {
-    dispatch(fetchPayment());
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -60,7 +54,7 @@ export default function CustomerOrder() {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.map((ele) => (
+                  {data?.map((ele) => (
                     <tr key={ele._id} className="border-b">
                       <td className="py-2 sm:px-4 text-center capitalize lg:text-lg">
                         {ele.orderId}

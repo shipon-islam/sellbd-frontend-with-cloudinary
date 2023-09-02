@@ -4,14 +4,13 @@ import { useForm } from "react-hook-form";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye } from "react-icons/fa";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { login } from "../app/feature/authSlice";
 import Button from "../components/utilities/Button";
 import Layout from "../components/utilities/Layout";
 import SignupSvg from "../components/utilities/SignupSvg";
 
+import { useLoginUserMutation } from "../app/services/userApi";
 import Form from "../components/utilities/Form";
 const yapvalidate = {
   email: Yup.string().required("Email is required"),
@@ -21,14 +20,12 @@ const yapvalidate = {
 const schema = Yup.object(yapvalidate).required(true);
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState({ email: "", password: "" });
+  const[loginUser,{isLoading,isSuccess}]=useLoginUserMutation()
   const [type, setType] = useState({
     password: true,
-    cpassword: true,
   });
-  const { errorMsg } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -38,7 +35,16 @@ export default function Dashboard() {
   });
 
   const onSubmit = async (data) => {
-    dispatch(login({ data, navigate, redirect: "/dashboard/product/list" }));
+    const res=await loginUser(data);
+    if(res.data.message){
+      toast.error(res.data.message,{
+      })
+     }
+     if(!res.data.message&&res.data){
+       console.log(res)
+      window.localStorage.setItem("user",JSON.stringify(res.data))
+      navigate("/dashboard/product/list")
+     }
   };
 
   const inputClass =
@@ -85,9 +91,6 @@ export default function Dashboard() {
                 />
               )}
             </div>
-            <small className="font-montserrat ml-2">
-              {errorMsg && errorMsg}
-            </small>
           </div>
           <Button type="submit" name="login" />
         </Form>

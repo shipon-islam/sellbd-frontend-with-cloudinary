@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProduct } from "../app/feature/getProductSlice";
 import Card from "../components/utilities/Card";
 import CardContainer from "../components/utilities/CardContainer";
 import CatLinks from "../components/utilities/CatLinks";
@@ -15,13 +16,12 @@ export default function Product() {
   const { catToggle, filterToggle, layoutToggle } = useSelector(
     (state) => state.toggler
   );
-
   const dispatch = useDispatch();
-  const [product, setProduct] = useState([]);
-  const { filterProduct, loading } = useSelector((state) => state.productList);
+  const { filterProduct, loading} = useSelector((state) => state.productList);  
   useEffect(() => {
-    setProduct(filterProduct);
-  }, [filterProduct]);
+    dispatch(fetchProduct())    
+  }, []);
+  
 
   return (
     <Layout>
@@ -35,16 +35,16 @@ export default function Product() {
             {catToggle && <CatLinks />}
             {filterToggle && <FilterMobileDevice />}
           </div>
-          {product.length > 0 ? (
+          {filterProduct?.length > 0 ? (
             layoutToggle ? (
               <div className="min-h-[55vh]">
                 <CardContainer>
-                  <Card filterProduct={product && product} />
+                  <Card filterProduct={filterProduct && filterProduct} />
                 </CardContainer>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-h-[55vh]">
-                <LineCard filterProduct={product && product} />
+                <LineCard filterProduct={filterProduct && filterProduct} />
                 <LineCard />
                 <LineCard />
               </div>

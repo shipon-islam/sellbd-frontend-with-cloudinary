@@ -1,12 +1,13 @@
 import React, { useRef, useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "../axios";
+import { ToastContainer, toast } from "react-toastify";
 
+import { useAddProductMutation } from "../app/services/productApi";
 import Layout from "../components/utilities/Layout";
 import Navbar from "./Navbar";
 import TextInput from "./TextInput";
 
 export default function ProductAdd() {
+ const [addProduct,]=useAddProductMutation()
   const [product, setProduct] = useState({
     name: "",
     title: "",
@@ -37,7 +38,7 @@ export default function ProductAdd() {
     setFeatures({ ...features, [name]: value });
   };
 
-  const addProduct = async () => {
+  const addProductFunc = async () => {
     let formdata = new FormData();
     Object.keys(product).forEach((item) => {
       formdata.append(item, product[item]);
@@ -50,7 +51,7 @@ export default function ProductAdd() {
     }
 
     try {
-      const { data } = await axios.post("/product/add", formdata);
+      const { data } = await addProduct(formdata);
       formRef.current.reset();
       return data;
     } catch (error) {
@@ -60,7 +61,7 @@ export default function ProductAdd() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const myFunc = addProduct();
+    const myFunc = addProductFunc();
 
     toast.promise(myFunc, {
       pending: "adding...",

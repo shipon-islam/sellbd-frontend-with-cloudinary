@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
-import axios from "../axios";
+import { ToastContainer, toast } from "react-toastify";
 
+import { useGetProductByIdQuery, useUpdateProductByIdMutation } from "../app/services/productApi";
 import Form from "../components/utilities/Form";
 import Layout from "../components/utilities/Layout";
 import Navbar from "./Navbar";
@@ -11,15 +11,11 @@ import TextInput from "./TextInput";
 
 export default function ProductEdit() {
   const { _id } = useParams();
-  const [loading, setloading] = useState(true);
   const [images, setImages] = useState([]);
+  const [updateProductById,{isLoading}]=useUpdateProductByIdMutation()
+  const {data:isExistProduct}=useGetProductByIdQuery(_id)
 
   const dispatch = useDispatch();
-  const paramProduct = useSelector(
-    (state) =>
-      state.productList.product &&
-      state.productList.product.find((ele) => ele._id === _id)
-  );
   const [product, setProduct] = useState({
     name: "",
     title: "",
@@ -39,6 +35,7 @@ export default function ProductEdit() {
     feature6: "",
   });
   useEffect(() => {
+    if(isExistProduct){
     const {
       name,
       title,
@@ -48,9 +45,9 @@ export default function ProductEdit() {
       rating,
       discountprice,
       desc,
-    } = paramProduct;
+    } = isExistProduct;
     const [feature1, feature2, feature3, feature4, feature5, feature6] =
-      paramProduct.features;
+    isExistProduct.features;
     setProduct({
       name,
       title,
@@ -69,7 +66,8 @@ export default function ProductEdit() {
       feature5,
       feature6,
     });
-  }, [_id]);
+  }
+  }, [isExistProduct]);
 
   const featureChange = (e) => {
     let { name, value } = e.target;
@@ -92,25 +90,28 @@ export default function ProductEdit() {
     });
 
     for (let image of images) {
-      formdata.append("image", image);
+      formdata.append("image[]", image);
     }
 
-    for (let image of paramProduct.image) {
+    for (let image of isExistProduct.image) {
       formdata.append("image[]", image);
     }
 
     try {
-      const { data } = await axios.put(`/product/update/${_id}`, formdata);
-      return data;
+      const res= await updateProductById({_id,formdata})
+      console.log(res)
+      return res.data;
     } catch (error) {
       console.log(error);
+      return error
+      
     }
   };
 
   //send to api
-  const handleSubmit = (e) => {
+  const handleSubmit =(e) => {
     e.preventDefault();
-    const myFunc = updateProduct();
+    const myFunc =updateProduct();
     toast.promise(myFunc, {
       pending: "updating...",
       success: "update successfuly👌",

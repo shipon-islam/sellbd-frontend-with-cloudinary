@@ -7,34 +7,26 @@ import { useDispatch, useSelector } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Link, useParams } from "react-router-dom";
-import { addcard, removecard } from "../app/feature/cardSlice";
-import {
-  addtoWishlist,
-  removeFromWishlist,
-} from "../app/feature/wishlistSlice";
+import { addcard, addtoWishlist, removeFromWishlist, removecard } from "../app/feature/cardSlice";
+import { useGetProductByIdQuery } from "../app/services/productApi";
 import DeliveryInfo from "../components/utilities/DeliveryInfo";
-
 import Layout from "../components/utilities/Layout";
 import Rating from "../components/utilities/Rating";
 
 export default function ProductInfo() {
   const { _id } = useParams();
-
   const dispatch = useDispatch();
-
   // check existing _id in wishlist
   const wishlist = useSelector((state) =>
-    state.wishlists.wishlist.some((ele) => ele._id === _id)
+    state.cardList.wishlist.some((ele) => ele._id === _id)
   );
   // check existing _id in cardlist
   const existingCardList = useSelector((state) =>
     state.cardList.product.some((ele) => ele._id === _id)
   );
   // coresponding find product from productlist by param _id
-  const product = useSelector((state) =>
-    state.productList.product.find((ele) => ele._id === _id)
-  );
 
+const {isLoading,data:product}=useGetProductByIdQuery(_id);
   //add and remove cardlist
   const handleCard = () => {
     if (!existingCardList) {
@@ -43,7 +35,6 @@ export default function ProductInfo() {
       dispatch(removecard(product._id));
     }
   };
-
   // add and remove wishlist
   const handleWishlist = () => {
     if (!wishlist) {

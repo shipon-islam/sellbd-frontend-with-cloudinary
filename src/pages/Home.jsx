@@ -1,6 +1,6 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import "../animation.css";
+import { useGetProductsQuery } from "../app/services/productApi";
 import banner1 from "../assets/banner1.png";
 import ledBanner from "../assets/ledBanner.png";
 import Fashion from "../components/sections/Fashion";
@@ -10,9 +10,8 @@ import Technology from "../components/sections/Technology";
 import Tending from "../components/sections/Tending";
 import Layout from "../components/utilities/Layout";
 
-export default function Home() {
-  const { loading, product } = useSelector((state) => state.productList);
-
+export default function Home() {  
+  const {isLoading,data}=useGetProductsQuery()
   return (
     <Layout>
       <Hero />
@@ -21,7 +20,7 @@ export default function Home() {
         src={banner1}
         alt="banner"
       />
-      <Tending />
+      <Tending products={data}/>
       <img
         className="mt-24 mb-12 w-full h-24 sm:h-auto"
         src={ledBanner}
@@ -35,7 +34,7 @@ export default function Home() {
         alt="banner"
       />
       <Technology />
-      <Fashion />
+      <Fashion/>
     </Layout>
   );
 }

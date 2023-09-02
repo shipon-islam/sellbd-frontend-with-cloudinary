@@ -1,27 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useParams } from "react-router-dom";
-import axios from "../axios";
+import { useGetOrderByIdQuery } from "../app/services/paymentApi";
 import Layout from "../components/utilities/Layout";
 import WraperSideLinks from "../components/utilities/WraperSideLinks";
 import Loading from "../pages/Loading";
 
 export default function ViewOrder() {
-  const [order, setOrder] = useState(null);
-  const [loading, setLoading] = useState(false);
   const { _id } = useParams();
-  const fetchOrderByid = async () => {
-    setLoading(true);
-    const { data } = await axios.get(`/customer/payment/get/${_id}`);
-    setOrder(data);
-    setLoading(false);
-  };
+  const{isLoading,data:order}=useGetOrderByIdQuery(_id)
+  
 
-  useEffect(() => {
-    fetchOrderByid();
-  }, []);
+ 
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 
@@ -36,8 +28,8 @@ export default function ViewOrder() {
               </h3>
               <p className="ml-2">Order Date : {order?.date}</p>
             </div>
-            <div className="border-2 w-fit px-4 py-2 bg-orange-200 font-bold text-gray-700">
-              Delivered
+            <div className="border-2 w-fit px-4 py-2 bg-orange-200 font-bold text-gray-700 capitalize">
+              {order?.status}
             </div>
           </div>
           <div className="font-montserrat">

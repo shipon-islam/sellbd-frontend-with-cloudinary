@@ -8,6 +8,9 @@ const initialState = {
   product: window.localStorage.getItem("item")
     ? JSON.parse(window.localStorage.getItem("item"))
     : [],
+  wishlist: window.localStorage.getItem("wishlist")
+    ? JSON.parse(window.localStorage.getItem("wishlist"))
+    : [],
 };
 
 // card add,remove,increament,decreament reducers
@@ -15,6 +18,15 @@ export const cardSlice = createSlice({
   name: "card",
   initialState,
   reducers: {
+    addtoWishlist: (state, action) => {
+      state.wishlist.push(action.payload);
+    },
+    removeFromWishlist: (state, action) => {
+      const filterWishlist = state.wishlist.filter(
+        (ele) => ele._id !== action.payload
+      );
+      state.wishlist = filterWishlist;
+    },
     addcard: (state, action) => {
       state.product.push({
         ...action.payload,
@@ -55,6 +67,13 @@ export const cardSlice = createSlice({
     },
   },
 });
-export const { addcard, removecard, increament, decreament, total } =
-  cardSlice.actions;
+export const {
+  addcard,
+  removecard,
+  addtoWishlist,
+  removeFromWishlist,
+  increament,
+  decreament,
+  total,
+} = cardSlice.actions;
 export default cardSlice.reducer;

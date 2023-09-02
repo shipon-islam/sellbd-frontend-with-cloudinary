@@ -4,22 +4,23 @@ import { useForm } from "react-hook-form";
 import { BsEyeSlashFill } from "react-icons/bs";
 import { FaEye, FaRegUserCircle } from "react-icons/fa";
 import { MdOutlineMarkEmailRead } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../app/feature/authSlice";
+import { toast } from "react-toastify";
+import { useRegisterUserMutation } from "../app/services/userApi";
+import { registorSchema } from "../components/YapSchema/Yap";
 import Button from "../components/utilities/Button";
 import Form from "../components/utilities/Form";
 import Layout from "../components/utilities/Layout";
-import { registorSchema } from "../components/YapSchema/Yap";
 
 export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const[registerUser,{isLoading}]=useRegisterUserMutation()
   const [type, setType] = useState({
     password: true,
     cpassword: true,
   });
-  const { isLoading } = useSelector((state) => state.auth);
   const {
     register,
     handleSubmit,
@@ -28,14 +29,21 @@ export default function Signup() {
     resolver: yupResolver(registorSchema),
   });
 
-  const onSubmit = (data) => {
-    dispatch(signup({ data, navigate, redirect: "/" }));
-    console.log(data);
+  const onSubmit = async(data) => {
+   const res=await registerUser(data);
+   if(res.data.message){
+    toast.error(res.data.message,{
+    })
+   }
+   if(!res.data.message&&res.data){
+    window.localStorage.setItem("user",JSON.stringify(res.data))
+    navigate("/")
+    window.location.reload();
+   }
   };
 
   const inputClass =
     "outline-none block border-orange-300 border-b-[0.1rem] bg-transparent  py-1  w-full text-lg pl-1 pr-9";
-
   return (
     <Layout>
       <div className="text-center mt-8">

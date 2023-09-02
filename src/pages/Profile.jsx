@@ -2,10 +2,8 @@ import React, { useRef, useState } from "react";
 import { FaHouseUser } from "react-icons/fa";
 import { HiCamera } from "react-icons/hi";
 import { MdMarkEmailUnread } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
-import { fetchUser } from "../app/feature/userInfoSlice";
-import axios from "../axios";
+import { toast } from "react-toastify";
+import { useGetAuthUserQuery, useUpdateUserMutation, } from "../app/services/userApi";
 import ChangePassword from "../components/utilities/ChangePassword";
 import Layout from "../components/utilities/Layout";
 import ProfieInfo from "../components/utilities/ProfieInfo";
@@ -13,10 +11,11 @@ import WraperSideLinks from "../components/utilities/WraperSideLinks";
 
 export default function Profile() {
   const [cngPassword, setcngPassword] = useState(false);
-  const { info } = useSelector((state) => state.userInfo);
+  const{isLoading,data:info}=useGetAuthUserQuery()
   const [image, setImage] = useState(null);
-  const dispatch = useDispatch();
   const fileRef = useRef();
+  const [updateUser,{isSuccess}]=useUpdateUserMutation()
+
   const postPhoto = async (e) => {
     //preview photo from fontend url
     setImage(URL.createObjectURL(e.target.files[0]));
@@ -24,13 +23,11 @@ export default function Profile() {
     const formdata = new FormData();
     formdata.append("avatar", e.target.files[0]);
     formdata.append("email", info.email);
-
     //requiest send
-    const { data } = await axios.put("/user/update", formdata);
-    if (data) {
-      dispatch(fetchUser());
-    }
-    return data;
+    const res = await updateUser(formdata);
+    console.log(res)
+    
+    return res;
   };
 
   const handleChangeImage = (e) => {
@@ -48,7 +45,6 @@ export default function Profile() {
 
   return (
     <Layout>
-      <ToastContainer />
       <WraperSideLinks page="personal info">
         <div className="border-2 h-fit sm:p-10 py-10 px-6 relative rounded-sm mt-8 bg-gray-200/30">
           <div className=" sm:flex flex-wrap gap-6">

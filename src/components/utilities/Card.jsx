@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Rating from "./Rating";
 
 const Card = ({ filterProduct }) => {
+  console.log(filterProduct)
   return (
     <>
       {filterProduct.map((element) => {

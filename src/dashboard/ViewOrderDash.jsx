@@ -1,29 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { TbCurrencyTaka } from "react-icons/tb";
-import axios from "../axios";
+import { useGetAllOrderListQuery, useOrderUpdateMutation } from "../app/services/paymentApi";
 import Layout from "../components/utilities/Layout";
 import EmptyItem from "../pages/EmptyItem";
 import Navbar from "./Navbar";
 
 export default function ViewOrderDash() {
-  const [data, setData] = useState(null);
   const [update, setupdate] = useState(null);
-  const fetchGetOrder = async () => {
-    try {
-      const res = await axios.get(`customer/payment/get/all`);
-      setData(res.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchGetOrder();
-  }, [update]);
+  const {data,isLoading}=useGetAllOrderListQuery()  
+  const[orderUpdate,{isSuccess}]=useOrderUpdateMutation()
 
   const handleClick = async (_id, status) => {
-    const res = await axios.put(`/customer/order/update/${_id}`, { status });
-    setupdate(res.data);
+    console.log(status)
+    const res = await orderUpdate({_id,status });
+    console.log(res)
   };
 
   return (

@@ -4,20 +4,20 @@ import { useForm } from "react-hook-form";
 import { TbCurrencyTaka } from "react-icons/tb";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useCreatePaymentMutation } from "../app/services/paymentApi";
 import logo from "../assets/bandlogo.png";
 import maestro from "../assets/icon/maestro.png";
 import visa from "../assets/icon/visa.png";
 import western_union from "../assets/icon/western-union.png";
-import axios from "../axios";
-import PaymentSuccess from "../components/utilities/PaymentSuccess";
 import { paymentSchema } from "../components/YapSchema/Yap";
+import PaymentSuccess from "../components/utilities/PaymentSuccess";
 
 function BuyNow() {
   const [toggle, setToggle] = useState(false);
   const { _id } = useParams();
-  const [loading, setLoading] = useState(false);
   const buttonRef = useRef(null);
   const formRef = useRef(null);
+  const[createPayment,{isLoading}]=useCreatePaymentMutation()
   const product = useSelector((state) =>
     state.productList.product.filter((ele) => ele._id === _id)
   );
@@ -32,8 +32,7 @@ function BuyNow() {
   // post payment event
   const onSubmit = async (data) => {
     buttonRef.current.disabled = true;
-    setLoading(true);
-    const res = await axios.post("/customer/payment/create", {
+    const res = await createPayment({
       data,
       productList: [_id],
       quantity: 1,
@@ -42,7 +41,6 @@ function BuyNow() {
     });
     if (res) {
       buttonRef.current.disabled = false;
-      setLoading(false);
       setToggle(true);
       formRef.current.reset();
     }
@@ -212,13 +210,13 @@ function BuyNow() {
         >
           <div
             className={`${
-              loading ? "flex" : "hidden"
+              isLoading ? "flex" : "hidden"
             } justify-center items-center gap-x-2`}
           >
             <span className=" inline-block w-6 h-6 rounded-full border-r-4 border-l-4 border-green-700 animate-spin"></span>
             loading...
           </div>
-          <div className={loading ? "hidden" : "block"}>
+          <div className={isLoading ? "hidden" : "block"}>
             Pay {product[0]?.price}
             <TbCurrencyTaka className="-ml-[6px] inline-block text-2xl  mb-[6px]" />
           </div>

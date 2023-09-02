@@ -1,24 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { TbCurrencyTaka } from "react-icons/tb";
 import { useSelector } from "react-redux";
+import { useCreatePaymentMutation } from "../app/services/paymentApi";
 import logo from "../assets/bandlogo.png";
 import maestro from "../assets/icon/maestro.png";
 import visa from "../assets/icon/visa.png";
 import western_union from "../assets/icon/western-union.png";
-import axios from "../axios";
-import PaymentSuccess from "../components/utilities/PaymentSuccess";
 import { paymentSchema } from "../components/YapSchema/Yap";
+import PaymentSuccess from "../components/utilities/PaymentSuccess";
 
 function Payment() {
   const [toggle, setToggle] = useState(false);
-  const [loadingToggle, setLoadingToggle] = useState(false);
   const buttonRef = useRef(null);
   const formRef = useRef(null);
+  const [createOrder,{isLoading,isSuccess}]=useCreatePaymentMutation()
   const { product, deliveryCharge, totalAmount } = useSelector(
-    (state) => state.cardList
-  );
+    (state) => state.cardList);
   const {
     register,
     handleSubmit,
@@ -34,8 +32,7 @@ function Payment() {
     }, 0);
 
     buttonRef.current.disabled = true;
-    setLoadingToggle(true);
-    const res = await axios.post("/customer/payment/create", {
+    const res = await createOrder({
       data,
       productList,
       quantity,
@@ -44,7 +41,6 @@ function Payment() {
     });
     if (res) {
       buttonRef.current.disabled = false;
-      setLoadingToggle(false);
       setToggle(true);
       formRef.current.reset();
     }
@@ -213,15 +209,14 @@ function Payment() {
         >
           <div
             className={`${
-              loadingToggle ? "flex" : "hidden"
+              isLoading ? "flex" : "hidden"
             } justify-center items-center gap-x-2`}
           >
             <span className=" inline-block w-6 h-6 rounded-full border-r-4 border-l-4 border-green-700 animate-spin"></span>
             loading...
           </div>
-          <div className={loadingToggle ? "hidden" : "block"}>
-            Pay {totalAmount && totalAmount}
-            <TbCurrencyTaka className="-ml-[6px] inline-block text-2xl  mb-[6px]" />
+          <div className={isLoading ? "hidden" : "block"}>
+            Pay ${totalAmount && totalAmount}
           </div>
         </button>
       </form>
