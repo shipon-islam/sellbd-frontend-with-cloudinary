@@ -9,6 +9,7 @@ import FilterAria from "../components/utilities/FilterAria";
 import FilterMobileDevice from "../components/utilities/FilterMobileDevice";
 import Layout from "../components/utilities/Layout";
 import LineCard from "../components/utilities/LineCard";
+import LoadingCard from "../components/utilities/LoadingCard";
 import NoFound from "../components/utilities/NoFound";
 import SidebarLinks from "../components/utilities/SidebarLInks";
 
@@ -17,11 +18,11 @@ export default function Product() {
     (state) => state.toggler
   );
   const dispatch = useDispatch();
-  const { filterProduct, loading} = useSelector((state) => state.productList);  
+  const { filterProduct, loading } = useSelector((state) => state.productList);
   useEffect(() => {
-    dispatch(fetchProduct())    
+    dispatch(fetchProduct());
   }, []);
-  
+
 
   return (
     <Layout>
@@ -29,30 +30,32 @@ export default function Product() {
         <SidebarLinks />
 
         <div>
+        
           <div className=" sticky border-b top-[8.5rem] md:top-[9.5rem]  bg-white pb-3 pt-5 px-2 ">
             <FilterAreaDesktop />
             <FilterAria />
             {catToggle && <CatLinks />}
             {filterToggle && <FilterMobileDevice />}
           </div>
-          {filterProduct?.length > 0 ? (
-            layoutToggle ? (
+          {!loading&&filterProduct.length<=0&&<NoFound/>}
+          {layoutToggle ?(
               <div className="min-h-[55vh]">
                 <CardContainer>
-                  <Card filterProduct={filterProduct && filterProduct} />
+                {loading?[1, 2, 3, 4, 5].map((ele, id) =>{
+                  return <LoadingCard key={id} />}):<Card filterProduct={filterProduct} />}
                 </CardContainer>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-h-[55vh]">
-                <LineCard filterProduct={filterProduct && filterProduct} />
+                <LineCard filterProduct={filterProduct} />
                 <LineCard />
                 <LineCard />
               </div>
             )
-          ) : (
-            <NoFound />
-          )}
+          } 
+          
         </div>
+        
       </div>
     </Layout>
   );
