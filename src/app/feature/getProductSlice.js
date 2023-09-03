@@ -13,7 +13,7 @@ const initialState = {
 export const fetchProduct = createAsyncThunk(
   "getproduct/fetchProduct",
   async () => {
-    const res = await fetch("https://sellbdapi.onrender.com/api/products");
+    const res = await fetch("https://lazy-gray-cobra-wear.cyclic.app/api/products");
     const data = await res.json();
     console.log(data);
     return data;
