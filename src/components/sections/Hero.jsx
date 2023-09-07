@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -15,7 +16,10 @@ export default function Hero() {
           product.
         </p>
         <button className="bg-orange-300 text-xl uppercase font-semibold py-3 px-16 rounded-md text-gray-800 mt-4">
-          get start
+          <Link to="/products">
+            get start
+          </Link>
+          
         </button>
       </div>
       <div className="hidden md:block col-span-3">

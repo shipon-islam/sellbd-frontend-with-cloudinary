@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { BsHeartFill } from "react-icons/bs";
@@ -13,33 +13,22 @@ import {
 } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { filterSearch } from "../../app/feature/getProductSlice";
 import logo from "../../assets/bandlogo.png";
 
 export default function TopNav() {
   const [toggleInfo, setToggleInfo] = useState(false);
   const [isUserExist, setisUserExist] = useState({});
-  const [toggleSearch, setToggleSearch] = useState(false);
   const [logoutModal, setLogoutModal] = useState(true);
   const { product } = useSelector((state) => state.cardList);
   const { searchProduct } = useSelector((state) => state.productList);
-  const [searchValue, setSearchValue] = useState("");
-  const inputRef = useRef(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleSearch = () => {
-    dispatch(filterSearch(searchValue));
-
-    if (searchValue) {
-      navigate(`product/search?result=${searchValue}`);
-      setSearchValue("");
-    }
+    navigate("/product/search")
   };
 
-  const handleSearchButton = () => {
-    setToggleSearch(true);
-  };
+ 
   const handleClose = () => {
     setToggleInfo(false);
   };
@@ -55,6 +44,7 @@ export default function TopNav() {
       : null;
     setisUserExist(user);
   }, [logoutModal]);
+  
 
   return (
     <div className="py-3 mx-8 md:mx-16 lg:mx-24 ">
@@ -64,12 +54,19 @@ export default function TopNav() {
         </div>
 
         <div
-          className={`${
-            toggleSearch ? "block absolute -right-9 z-10 sm:static" : "hidden"
-          } sm:block`}
+          className="block absolute -right-9 z-10 sm:static"
         >
-          <div className="relative w-[80%] sm:w-full">
+          <div className="relative hidden sm:block">
             <input
+              className="focus:outline-none
+            border-2 w-full lg:w-[32rem] bg-white border-gray-400 px-3 rounded-md py-2"
+              type="search"
+              value=""
+              onChange={()=>console.log("first")}
+              placeholder="I'am looking for?"
+              onClick={handleSearch}
+            />
+            {/* <input
               ref={inputRef}
               className="focus:outline-none
             border-2 w-full lg:w-[32rem] bg-white border-gray-400 px-3 rounded-md py-2"
@@ -78,10 +75,10 @@ export default function TopNav() {
               value={searchValue}
               onMouseLeave={() => setToggleSearch(false)}
               onChange={(e) => setSearchValue(e.target.value)}
-            />
+            /> */}
 
             <button
-              onClick={handleSearch}
+            
               className="bg-orange-300 absolute  right-[2.5px] rounded-r-[4px] h-[86%] top-[3px] px-3"
             >
               <RiSearchLine className="text-gray-800 text-2xl cursor-pointer" />
@@ -91,7 +88,7 @@ export default function TopNav() {
 
         <div>
           <FaSearch
-            onClick={handleSearchButton}
+            onClick={handleSearch}
             className="sm:hidden cursor-pointer text-gray-700 text-3xl inline-block"
           />
           <Link to="/product/card" className="inline mx-6 md:mr-8 relative">

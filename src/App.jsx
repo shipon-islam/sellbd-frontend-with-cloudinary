@@ -1,15 +1,19 @@
 import { gapi } from "gapi-script";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Routers from "./Routes/Routers";
+import { fetchProduct } from "./app/feature/getProductSlice";
 function App() {
   const { product,wishlist } = useSelector((state) => state.cardList);
+  const dispatch=useDispatch()
   useEffect(() => {
     //save card item and wishlist in localstorage
     window.localStorage.setItem("item", JSON.stringify(product));
     window.localStorage.setItem("wishlist", JSON.stringify(wishlist));
   }, [product, wishlist]);
-
+  useEffect(() => {
+    dispatch(fetchProduct());
+  }, []);
 
   // google auth login
   gapi.load("client:auth2", () => {

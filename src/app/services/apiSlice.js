@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const SplitApi = createApi({
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://lazy-gray-cobra-wear.cyclic.app/api/",
+    baseUrl: "https://sellbdapi.cyclic.app/api/",
     prepareHeaders: (headers, { getState }) => {
       const user = window.localStorage.getItem("user")
         ? JSON.parse(window.localStorage.getItem("user"))

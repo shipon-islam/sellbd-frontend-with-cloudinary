@@ -44,7 +44,7 @@ export default function BottomNav() {
               onClick={handleClick}
               className="block text-[1rem]  font-[500] my-3 uppercase  text-slate-600 hover:text-slate-900"
             >
-              All product
+              products
             </Link>
             <Link
               to="/contact"

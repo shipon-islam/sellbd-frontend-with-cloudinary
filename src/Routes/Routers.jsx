@@ -1,5 +1,5 @@
 import React from "react";
-import { HashRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, HashRouter as Router, Routes } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Navbar from "../components/header/Navbar";
 import Dashboard from "../dashboard/Dashboard";
@@ -22,8 +22,8 @@ import Search from "../pages/Search";
 import Signup from "../pages/Signup";
 import ViewOrder from "../pages/ViewOrder";
 import WishList from "../pages/WishList";
-import ProtectedDashboard from "./ProtectedDashboard";
 import ProtectRoutes from "./ProtectRoutes";
+import ProtectedDashboard from "./ProtectedDashboard";
 
 export default function Routers() {
   return (

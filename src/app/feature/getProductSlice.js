@@ -13,9 +13,8 @@ const initialState = {
 export const fetchProduct = createAsyncThunk(
   "getproduct/fetchProduct",
   async () => {
-    const res = await fetch("https://lazy-gray-cobra-wear.cyclic.app/api/products");
+    const res = await fetch("https://sellbdapi.cyclic.app/api/products");
     const data = await res.json();
-    console.log(data);
     return data;
   }
 );
@@ -58,9 +57,13 @@ export const getProductSlice = createSlice({
       }
     },
     filterSearch: (state, action) => {
-      state.searchProduct = state.product.filter((ele) =>
-        ele.title.toLowerCase().includes(action.payload.toLowerCase())
-      );
+      if (action.payload === "") {
+        state.searchProduct = [];
+      } else {
+        state.searchProduct = state.product.filter((ele) =>
+          ele.title.toLowerCase().includes(action.payload.toLowerCase(), -1)
+        );
+      }
     },
     filterPriceRange: (state, action) => {
       state.filterProduct = state.product.filter((ele) => {
