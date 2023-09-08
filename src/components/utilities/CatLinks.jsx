@@ -57,7 +57,34 @@ export default function CatLinks() {
         </div>
       </div>
       <div>
-        <h4 className="border-b">Fashion & Lifestyle</h4>
+        <h4 className="border-b">Fashion</h4>
+        <div>
+          <button
+            onClick={handleClick}
+            className=" text-[0.9rem]  block hover:text-orange-300"
+          >
+            Shoes
+          </button>
+          <button
+            onClick={handleClick}
+            className=" text-[0.9rem]  block hover:text-orange-300"
+          >
+            Belt
+          </button>
+          <button
+            onClick={handleClick}
+            className=" text-[0.9rem]  block hover:text-orange-300"
+          >
+            Sunglass
+          </button>
+          <button
+            onClick={handleClick}
+            className=" text-[0.9rem]  block hover:text-orange-300"
+          >
+            Wallet
+          </button>
+        </div>
+        <h4 className="border-b">Clothes</h4>
         <div>
           <button
             onClick={handleClick}
@@ -77,30 +104,14 @@ export default function CatLinks() {
           >
             Panjabi
           </button>
-          <button
-            onClick={handleClick}
-            className=" text-[0.9rem]  block hover:text-orange-300"
-          >
-            Shoes
-          </button>
-          <button
-            onClick={handleClick}
-            className=" text-[0.9rem]  block hover:text-orange-300"
-          >
-            Belt
-          </button>
+         
           <button
             onClick={handleClick}
             className=" text-[0.9rem]  block hover:text-orange-300"
           >
             Jeans pant
           </button>
-          <button
-            onClick={handleClick}
-            className=" text-[0.9rem]  block hover:text-orange-300"
-          >
-            Wallet
-          </button>
+         
         </div>
       </div>
     </div>

@@ -102,7 +102,39 @@ function SidebarLinks() {
         </li>
         <li>
           <div className="border-b text-sm text-black">
-            Fashion & Lifestyle
+            Fashion
+            <MdOutlineKeyboardArrowDown className="inline-block" />
+          </div>
+          <ul className="mt-1">
+            <li
+              onClick={handleClick}
+              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
+            >
+              Wallet
+            </li>
+            <li
+              onClick={handleClick}
+              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
+            >
+              Shoes
+            </li>
+            <li
+              onClick={handleClick}
+              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
+            >
+              Belt
+            </li>
+            <li
+              onClick={handleClick}
+              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
+            >
+              Sunglass
+            </li>
+          </ul>
+        </li>
+        <li>
+          <div className="border-b text-sm text-black">
+            Clothes
             <MdOutlineKeyboardArrowDown className="inline-block" />
           </div>
           <ul className="mt-1">
@@ -129,24 +161,6 @@ function SidebarLinks() {
               className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
             >
               Jeans pant
-            </li>
-            <li
-              onClick={handleClick}
-              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
-            >
-              Wallet
-            </li>
-            <li
-              onClick={handleClick}
-              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
-            >
-              Shoes
-            </li>
-            <li
-              onClick={handleClick}
-              className="option text-[0.9rem] cursor-pointer hover:text-orange-300"
-            >
-              Belt
             </li>
           </ul>
         </li>

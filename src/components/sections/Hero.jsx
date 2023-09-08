@@ -16,7 +16,7 @@ export default function Hero() {
           product.
         </p>
         <button className="bg-orange-300 text-xl uppercase font-semibold py-3 px-16 rounded-md text-gray-800 mt-4">
-          <Link to="/products">
+          <Link to="/product">
             get start
           </Link>
           

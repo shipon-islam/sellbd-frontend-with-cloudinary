@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useGetOrderByIdQuery } from "../app/services/paymentApi";
 import Layout from "../components/utilities/Layout";
 import WraperSideLinks from "../components/utilities/WraperSideLinks";
-import Loading from "../pages/Loading";
 
 export default function ViewOrder() {
   const { _id } = useParams();
@@ -14,7 +13,9 @@ export default function ViewOrder() {
  
 
   if (isLoading) {
-    return <Loading />;
+    return <div className="min-h-[60vh] grid place-items-center">
+      <h1 className="font-bold">Just a second..</h1>
+    </div>;
   }
 
   return (

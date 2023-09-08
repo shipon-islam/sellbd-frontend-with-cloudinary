@@ -30,7 +30,7 @@ export default function Product() {
         <SidebarLinks />
 
         <div>
-          <div className=" sticky border-b top-[8.5rem] md:top-[9.5rem]  bg-white pb-3 pt-5 px-2 ">
+          <div className=" sticky border-b top-[8.5rem] md:top-[9.5rem]  bg-white pb-3 pt-5 px-2 z-[9]">
             <FilterAreaDesktop />
             <FilterAria />
             {catToggle && <CatLinks />}

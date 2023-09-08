@@ -4,23 +4,20 @@ import { Link } from "react-router-dom";
 import { useGetOrderListQuery } from "../app/services/paymentApi";
 import Layout from "../components/utilities/Layout";
 import PaymentSmDevice from "../components/utilities/PaymentSmDevice";
+import { OrderLoading } from "../components/utilities/Svg";
 import WraperSideLinks from "../components/utilities/WraperSideLinks";
 import EmptyItem from "./EmptyItem";
-import Loading from "./Loading";
 
 export default function CustomerOrder() {
   const [show, setShow] = useState(true);
-  const{isLoading,data}=useGetOrderListQuery()
- 
-
-  if (isLoading) {
-    return <Loading />;
-  }
+  const { isLoading, data } = useGetOrderListQuery();
 
   return (
     <Layout>
       <WraperSideLinks page="customer order">
-        {data && data.length > 0 ? (
+        {isLoading ? (
+          <OrderLoading />
+        ) : (
           <div className="mx-auto">
             {data.map((ele) => (
               <div key={ele._id} className="mt-4 md lg:text-md md:hidden">
@@ -84,10 +81,10 @@ export default function CustomerOrder() {
                 </tbody>
               </table>
             </div>
+            {data.length<0?<EmptyItem title="order list" />:""}
           </div>
-        ) : (
-          <EmptyItem title="order list" />
         )}
+        
       </WraperSideLinks>
     </Layout>
   );

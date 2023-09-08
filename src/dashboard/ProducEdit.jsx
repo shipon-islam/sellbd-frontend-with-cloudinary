@@ -189,7 +189,8 @@ export default function ProductEdit() {
                 <option>Select category</option>
                 <option value="tending">Tending</option>
                 <option value="technology">Technology</option>
-                <option value="fashion & lifestyle">Fashion & Lifestyle</option>
+                <option value="fashion">Fashion</option>
+                <option value="clothes">Clothes</option>
               </select>
             </div>
             <div className="mt-6">
@@ -215,6 +216,7 @@ export default function ProductEdit() {
                 <option value="wallet">Wallet</option>
                 <option value="shoes">Shoes</option>
                 <option value="belt">Belt</option>
+                <option value="sunglass">sunglass</option>
               </select>
             </div>
             <div className="mt-6">

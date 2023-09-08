@@ -1,10 +1,24 @@
 import React from "react";
+import { BsHeartFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { TbCurrencyTaka } from "react-icons/tb";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { addtoWishlist, removeFromWishlist } from "../../app/feature/cardSlice";
 import Rating from "./Rating";
 
 const Card = ({ product }) => {
+  const dispatch=useDispatch()
+  const wishlist = useSelector((state) =>
+    state.cardList.wishlist.some((ele) => ele._id === product._id)
+  );
+  const handleWishlist = () => {
+    if (!wishlist) {
+      dispatch(addtoWishlist(product));
+    } else {
+      dispatch(removeFromWishlist(product._id));
+    }
+  };
   return (
     <div className="max-w-[250px]  py-2 px-3 relative">
       <Link to={`/product/info/${product?._id}`}>
@@ -31,7 +45,14 @@ const Card = ({ product }) => {
         </div>
       </Link>
       <button className="absolute top-2 right-2 bg-gray-200/40 p-2 rounded-full">
-        <FaHeart className="text-lg text-gray-400" />
+        {wishlist ? (
+          <BsHeartFill
+            onClick={handleWishlist}
+            className="text-lg  text-rose-500"
+          />
+        ) : (
+          <FaHeart onClick={handleWishlist} className="text-lg text-gray-400" />
+        )}
       </button>
     </div>
   );
