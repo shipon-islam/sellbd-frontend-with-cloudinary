@@ -73,7 +73,7 @@ export default function Product() {
           )}
 
           <ReactPaginate
-            className="flex space-x-5 font-bold ml-auto w-fit"
+            className="flex space-x-5 font-bold ml-auto w-fit mt-8 text-gray-700"
             breakLabel="..."
             nextLabel="next >"
             onPageChange={handlePageClick}
