@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProduct } from "../app/feature/getProductSlice";
 import Card from "../components/utilities/Card";
@@ -20,9 +21,24 @@ export default function Product() {
   const { filterProduct: products, loading } = useSelector(
     (state) => state.productList
   );
+  const [itemOffset, setItemOffset] = useState(0);
+  const [itemsPerPage] = useState(8);
   useEffect(() => {
     dispatch(fetchProduct());
   }, []);
+
+  const endOffset = itemOffset + itemsPerPage;
+  const currentItems = products.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(products.length / itemsPerPage);
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % products.length;
+    console.log(
+      `User requested page number ${event.selected}, which is offset ${newOffset}`
+    );
+    setItemOffset(newOffset);
+  };
 
   return (
     <Layout>
@@ -36,25 +52,36 @@ export default function Product() {
             {catToggle && <CatLinks />}
             {filterToggle && <FilterMobileDevice />}
           </div>
-          {!loading && products.length <= 0 && <NoFound />}
+          {!loading && currentItems.length <= 0 && <NoFound />}
           {layoutToggle ? (
             <div className="min-h-[55vh]">
               <div className="grid gap-x-2 gap-y-4 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-items-center">
                 {loading
                   ? [1, 2, 3, 4, 5].map((ele, id) => <LoadingCard key={id} />)
-                  : products.map((product) => (
+                  : currentItems.map((product) => (
                       <Card key={product._id} product={product} />
                     ))}
               </div>
             </div>
           ) : (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-3 min-h-[55vh]">
-              {products &&
-                products.map((product) => (
+              {currentItems &&
+                currentItems.map((product) => (
                   <LineCard key={product._id} product={product} />
                 ))}
             </div>
           )}
+
+          <ReactPaginate
+            className="flex space-x-5 font-bold ml-auto w-fit"
+            breakLabel="..."
+            nextLabel="next >"
+            onPageChange={handlePageClick}
+            pageRangeDisplayed={5}
+            pageCount={pageCount}
+            previousLabel="< previous"
+            renderOnZeroPageCount={null}
+          />
         </div>
       </div>
     </Layout>
