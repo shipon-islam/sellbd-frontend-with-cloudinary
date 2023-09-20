@@ -15,9 +15,6 @@ const extendedApi = SplitApi.injectEndpoints({
         method: "POST",
         body: formdata,
       }),
-      onQueryStarted: (options, { dispatch, queryFulfilled }) => {
-        options.mode = 'no-cors';
-      },
     }),
     updateProductById: build.mutation({
       query: ({ _id, formdata }) => {
@@ -27,18 +24,12 @@ const extendedApi = SplitApi.injectEndpoints({
           body: formdata,
         };
       },
-      onQueryStarted: (options, { dispatch, queryFulfilled }) => {
-        options.mode = 'no-cors';
-      },
     }),
     deleteProduct: build.mutation({
       query: (_id) => ({
         url: `product/${_id}`,
         method: "DELETE",
       }),
-      onQueryStarted: (options, { dispatch, queryFulfilled }) => {
-        options.mode = 'no-cors';
-      },
     }),
   }),
   overrideExisting: false,
